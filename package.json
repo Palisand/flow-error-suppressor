@@ -1,6 +1,6 @@
 {
   "name": "flow-error-suppressor",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Suppress flow errors from `node_modules`.",
   "main": "index.js",
   "bin": {

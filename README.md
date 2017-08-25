@@ -5,14 +5,15 @@ This is an alternative to jbreckel's [flow-result-checker](https://github.com/jb
 In _`package.json`_:
 ```
 "scripts": {
-  "flow": "script -q /dev/null flow | flow-error-suppressor"
+  "flow": "script -q /dev/null flow --show-all-errors | flow-error-suppressor"
 }
 ```
 
-The output will include the number of errors that have been suppressed:
+The output will include the number of errors that are shown and that have been suppressed:
 ```
 Found 10 errors
-     (2 suppressed)
+      2 suppressed
+      8 shown
 ```
 
 \*We should not have to worry about flow errors reported for third party modules (i.e. from _`node_modules`_). However, it is often the case that one cannot simply `[ignore]` a problem module without having provided a libdef, which can be very time-consuming if it is not included in [flow-typed](https://github.com/flowtype/flow-typed).
