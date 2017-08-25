@@ -1,0 +1,24 @@
+{
+  "name": "flow-error-suppressor",
+  "version": "1.0.0",
+  "description": "Suppress flow errors from `node_modules`.",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Palisand/flow-error-suppressor.git"
+  },
+  "keywords": [
+    "flow",
+    "error",
+    "suppress"
+  ],
+  "author": "Panagis Alisandratos",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Palisand/flow-error-suppressor/issues"
+  },
+  "homepage": "https://github.com/Palisand/flow-error-suppressor#readme"
+}
