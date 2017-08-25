@@ -15,4 +15,4 @@ Found 10 errors
      (2 suppressed)
 ```
 
-\* We should not have to worry about flow errors reported for third party modules (i.e. from _`node_modules`_). However, it is often the case that one cannot simply `[ignore]` a problem module without providing a libdef, which can be very time-consuming if it is not included in [flow-typed](https://github.com/flowtype/flow-typed).
+\*We should not have to worry about flow errors reported for third party modules (i.e. from _`node_modules`_). However, it is often the case that one cannot simply `[ignore]` a problem module without having provided a libdef, which can be very time-consuming if it is not included in [flow-typed](https://github.com/flowtype/flow-typed).
