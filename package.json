@@ -7,7 +7,11 @@
     "flow-error-suppressor": "./index.js"
   },
   "scripts": {
-    "test": "test"
+    "test": "jest"
+  },
+  "devDependencies": {
+    "flow-bin": "^0.53.1",
+    "jest": "^20.0.4"
   },
   "repository": {
     "type": "git",
