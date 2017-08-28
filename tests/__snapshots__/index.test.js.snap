@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`no-errors matches snapshot 1`] = `""`;
+
+exports[`no-errors matches snapshot 2`] = `
+"^DNo errors!
+      0 suppressed
+      0 shown
+
+"
+`;
+
+exports[`package-errors matches snapshot 1`] = `""`;
+
+exports[`package-errors matches snapshot 2`] = `
+"
+Found 1 error
+      1 suppressed
+      0 shown
+
+"
+`;
+
+exports[`script-errors matches snapshot 1`] = `""`;
+
+exports[`script-errors matches snapshot 2`] = `
+"^D[31;1mError:[0m[0m [0m[0;4mindex.js:4[0m[0m
+[0m[0;1m  4: [0m[0mfoo([0m[31m42[0m[0m);[0m[0;1m
+         ^^ number. This type is incompatible with the expected param type of[0m[0m[0m[0m
+[0m[0;1m  3: [0m[0mfunction foo(bar: [0m[31mstring[0m[0m) {}[0m[0;1m
+                       ^^^^^^ string[0m[0m[0m[0m
+[0m[0m
+[0m
+Found 1 error
+      0 suppressed
+      1 shown
+
+"
+`;
