@@ -2,6 +2,7 @@
 /* eslint-disable no-undef */
 
 const stdoutChunks = [];
+const DELIMETER = "\r\n\u001b[0m\u001b[0m\r\n\u001b[0m"
 
 module.exports = {
 
@@ -10,25 +11,34 @@ module.exports = {
   },
 
   process: () => {
-    // split flow output into error strings
-    const errors = stdoutChunks.join("").split(/\r\n\u001b\[0m\u001b\[0m\r\n\u001b\[0m/);
+    // split flow output into error strings and summary string
+    const stdoutSplit = stdoutChunks.join("").split(/\r\n\u001b\[0m\u001b\[0m\r\n\u001b\[0m/);
+    const errors = stdoutSplit.slice(0, -1)
+    const defaultErrorSummary = stdoutSplit[stdoutSplit.length - 1]
 
     // filter out errors from node_modules
-    const errors_filtered = errors.filter(
+    const errorsShown = errors.filter(
       error => error && !error.split(/\r\n/)[0].includes("node_modules")
     );
 
-    // display filtered errors
+    // display unsuppressed errors, if any
+    if (errorsShown.length > 0) {
+      process.stdout.write(
+        errorsShown.join(DELIMETER)
+      );
+    };
+
+    // display summary
     process.stdout.write(
-      errors_filtered.join("\r\n\u001b[0m\u001b[0m\r\n\u001b[0m")
+      (errorsShown.length > 0 ? DELIMETER : "") + defaultErrorSummary
     );
 
     // display error counts
-    if (errors_filtered.length > 0) {
-      const num_errors_suppressed = errors.length - errors_filtered.length;
+    if (errors.length > 0) {
+      const numErrorSuppressed = errors.length - errorsShown.length;
       process.stdout.write(
-        `      ${num_errors_suppressed} suppressed\n` +
-        `      ${errors.length - num_errors_suppressed - 1} shown\n\n`
+        `      ${numErrorSuppressed} suppressed\n` +
+        `      ${errors.length - numErrorSuppressed } shown\n\n`
       );
     }
   },

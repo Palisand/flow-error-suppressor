@@ -4,9 +4,6 @@ exports[`no-errors matches snapshot 1`] = `""`;
 
 exports[`no-errors matches snapshot 2`] = `
 "^DNo errors!
-      0 suppressed
-      0 shown
-
 "
 `;
 
