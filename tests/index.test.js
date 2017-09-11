@@ -1,8 +1,8 @@
 const {spawnSync} = require("child_process");
 const {resolve} = require("path");
 
-const buildSnapshotTest = (testdir) => {
-  test("matches snapshot", () => {
+const buildTests = (testdir, option = "NONE") => {
+  describe(`${testdir} ${option}`, () => {
     const {stdout: flowStdout} = spawnSync(
       "script",
       [
@@ -18,15 +18,45 @@ const buildSnapshotTest = (testdir) => {
     );
     const {status, stderr, stdout} = spawnSync(
       "node",
-      ["index.js"],
+      [
+        "index.js",
+        ...(option === "NONE" ? [] : [option])
+      ],
       {
         encoding: "utf8",
         input: flowStdout
       }
     );
-    expect(stderr).toMatchSnapshot();
-    expect(stdout).toMatchSnapshot();
-    expect(status).toBe(0);
+
+    test("matches snapshot", () => {
+      expect(stdout).toMatchSnapshot();
+    })
+
+    test("exits correctly", () => {
+      expect(status).toBe({
+        "no-errors": {
+          "-a": 0,
+          "--error-on-any": 0,
+          "-n": 0,
+          "--no-error": 0,
+          "NONE": 0,
+        },
+        "package-errors": {
+          "-a": 2,
+          "--error-on-any": 2,
+          "-n": 0,
+          "--no-error": 0,
+          "NONE": 0,
+        },
+        "script-errors": {
+          "-a": 2,
+          "--error-on-any": 2,
+          "-n": 0,
+          "--no-error": 0,
+          "NONE": 2,
+        }
+      }[testdir][option]);
+    })
   })
 };
 
@@ -36,8 +66,16 @@ const buildSnapshotTest = (testdir) => {
   "script-errors"
 ].map(
   testdir => {
-    describe(testdir, () => {
-      buildSnapshotTest(testdir)
-    })
+    [
+      "-a",
+      "--error-on-any",
+      "-n",
+      "--no-error",
+      "NONE",
+    ].map(
+      option => {
+        buildTests(testdir, option);
+      }
+    )
   }
 );

@@ -41,6 +41,19 @@ module.exports = {
         `      ${errors.length - numErrorSuppressed } shown\n\n`
       );
     }
+
+    // determine exit code
+    switch (process.argv[2]) {
+      case "-a":
+      case "--error-on-any":
+        process.exit(errors.length > 0 ? 2 : 0);
+      case "-n":
+      case "--no-error":
+        process.exit(0);
+      default:
+        process.exit(errorsShown.length > 0 ? 2 : 0);
+    }
+
   },
 
 };
