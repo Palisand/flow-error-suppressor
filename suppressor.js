@@ -2,7 +2,11 @@
 /* eslint-disable no-undef */
 
 const stdoutChunks = [];
-const DELIMETER = "\r\n\u001b[0m\u001b[0m\r\n\u001b[0m"
+const JOIN_SEPARATOR = "\r\n\u001b[0m\u001b[0m\r\n\u001b[0m"
+const SPLIT_SEPARATORS = [
+  "\\r\\n\\u001b\\[0m\\u001b\\[0m\\r\\n\\u001b\\[0m",
+  "\\r\\n\\u001b\\[0m\\u001b\\[0m\\r\\r\\n\\u001b\\[0m",  // double carriage return
+]
 
 module.exports = {
 
@@ -12,7 +16,7 @@ module.exports = {
 
   process: () => {
     // split flow output into error strings and summary string
-    const stdoutSplit = stdoutChunks.join("").split(/\r\n\u001b\[0m\u001b\[0m\r\n\u001b\[0m/);
+    const stdoutSplit = stdoutChunks.join("").split(new RegExp(SPLIT_SEPARATORS.join("|")));
     const errors = stdoutSplit.slice(0, -1)
     const defaultErrorSummary = stdoutSplit[stdoutSplit.length - 1]
 
@@ -24,13 +28,13 @@ module.exports = {
     // display unsuppressed errors, if any
     if (errorsShown.length > 0) {
       process.stdout.write(
-        errorsShown.join(DELIMETER)
+        errorsShown.join(JOIN_SEPARATOR)
       );
     };
 
     // display summary
     process.stdout.write(
-      (errorsShown.length > 0 ? DELIMETER : "") + defaultErrorSummary
+      (errorsShown.length > 0 ? JOIN_SEPARATOR : "") + defaultErrorSummary
     );
 
     // display error counts
