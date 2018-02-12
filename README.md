@@ -1,11 +1,18 @@
 ## flow-error-suppressor
 
-This is an alternative to jbreckel's [flow-result-checker](https://github.com/jbreckel/flow-result-checker) for *[flow issue 869](https://github.com/facebook/flow/issues/869) that does not alter the text styling of flow's error output and does not have any dependencies, so to speak: It expects the **raw** output, which can be provided by using the [script](http://man7.org/linux/man-pages/man1/script.1.html) command. This has been tested **only** on OS X.
+This is an alternative to jbreckel's [flow-result-checker](https://github.com/jbreckel/flow-result-checker) for *[flow issue 869](https://github.com/facebook/flow/issues/869) that does not alter the text styling of flow's error output and does not have any dependencies, so to speak: It expects the **raw** output, which can be provided by using the [script](http://man7.org/linux/man-pages/man1/script.1.html) command. This has been tested on OS X and Linux.
 
-In _`package.json`_:
+In _`package.json`_(OS X):
 ```
 "scripts": {
   "flow": "script -q /dev/null flow --show-all-errors | flow-error-suppressor"
+}
+```
+
+In _`package.json`_(Linux):
+```
+"scripts": {
+  "flow": "script -q /dev/null -c 'flow --show-all-errors' | flow-error-suppressor"
 }
 ```
 
